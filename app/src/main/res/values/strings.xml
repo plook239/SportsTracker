@@ -10,4 +10,6 @@
     <string name="game_data_4">Team %1$s (%2$d) vs. Team %3$s (%4$d)</string>
     <string name="game_data_5">Team %1$s (%2$d) vs. Team %3$s (%4$d)</string>
     <string name="event_view_title">%1$s Past Five Home Games</string>
+    <string name="remove_team">Team will be removed from favorites.</string>
+    <string name="back_to_search_button_text">Back to Search</string>
 </resources>

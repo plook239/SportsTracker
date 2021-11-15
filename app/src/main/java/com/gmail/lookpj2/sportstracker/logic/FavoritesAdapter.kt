@@ -15,12 +15,11 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.gmail.lookpj2.sportstracker.R
 import com.gmail.lookpj2.sportstracker.data.local.entities.TeamEntity
 import com.gmail.lookpj2.sportstracker.ui.EventsFragment
-import com.gmail.lookpj2.sportstracker.ui.FavoritesFragment
 import com.gmail.lookpj2.sportstracker.ui.MainActivity
 
 class FavoritesAdapter(
-    private var teams: List<TeamEntity>
-): RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
+    private var teams: MutableList<TeamEntity>
+) : RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
     private lateinit var context: Context
     private lateinit var mTeamViewModel: TeamViewModel
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
@@ -33,9 +32,6 @@ class FavoritesAdapter(
 
     override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
         holder.bind(teams[position])
-        holder.remove.setOnClickListener{
-
-        }
     }
 
     override fun getItemCount(): Int = teams.size
@@ -70,8 +66,9 @@ class FavoritesAdapter(
                     mTeamViewModel = ViewModelProvider(activity)
                         .get(TeamViewModel::class.java)
                     mTeamViewModel.deleteTeam(team.teamId)
-
-                    notifyItemRemoved(teams.indexOf(bindingAdapterPosition))
+                    teams.removeAt(layoutPosition)
+                    notifyItemRemoved(layoutPosition)
+                    notifyItemRangeChanged(layoutPosition, itemCount)
                 }
 
             }

@@ -25,10 +25,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginVertical="10dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:scrollbars="vertical"
-        android:scrollbarStyle="outsideOverlay"
         android:scrollbarSize="5dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/favorites_fragment_start_button"
         app:layout_constraintEnd_toEndOf="@id/search_view"
         app:layout_constraintStart_toStartOf="@id/search_view"
@@ -36,17 +36,17 @@
 
     <Button
         android:id="@+id/favorites_fragment_start_button"
-        android:text="@string/favorites_button"
         android:layout_width="150dp"
         android:layout_height="50dp"
+        android:text="@string/favorites_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/end_favorites_fragment_button"
-        android:text="Back to Search"
         android:layout_width="150dp"
         android:layout_height="50dp"
+        android:text="@string/back_to_search_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -62,9 +62,9 @@
         app:layout_constraintTop_toBottomOf="@+id/search_view" />
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/event_fragment_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/event_fragment_container"
         app:layout_constraintBottom_toBottomOf="@+id/team_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/team_recycler_view"

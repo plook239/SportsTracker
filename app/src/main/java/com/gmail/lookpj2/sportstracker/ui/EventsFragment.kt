@@ -12,7 +12,7 @@ import com.gmail.lookpj2.sportstracker.data.Repository
 import com.gmail.lookpj2.sportstracker.data.remote.model.PastEventModel
 import kotlinx.android.synthetic.main.events_fragment.*
 
-class EventsFragment(id : String): Fragment() {
+class EventsFragment(id: String) : Fragment() {
     private lateinit var viewOfLayout: View
     var teamId = id
     override fun onCreateView(
@@ -21,8 +21,10 @@ class EventsFragment(id : String): Fragment() {
         savedInstanceState: Bundle?
     ): View {
         viewOfLayout =
-            LayoutInflater.from(context).inflate(R.layout.events_fragment, container,
-                false)
+            LayoutInflater.from(context).inflate(
+                R.layout.events_fragment, container,
+                false
+            )
         return viewOfLayout
     }
 
@@ -34,14 +36,16 @@ class EventsFragment(id : String): Fragment() {
             onError = ::onEventsError
         )
 
-        close_event_fragment_button.setOnClickListener{
+        close_event_fragment_button.setOnClickListener {
             endEventsFragment()
         }
     }
 
     private fun onEventsError() {
-        Toast.makeText(this@EventsFragment.context, getString(R.string.error_fetch_teams),
-            Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this@EventsFragment.context, getString(R.string.error_fetch_teams),
+            Toast.LENGTH_SHORT
+        ).show()
         Log.d("Crashed", "No events were found with that team ID")
     }
 
@@ -50,29 +54,39 @@ class EventsFragment(id : String): Fragment() {
         val viewTitle = getString(R.string.event_view_title, pastEvents[0].homeTeam)
         event_view_title.text = viewTitle
 
-        val gameOne = getString(R.string.game_data_1,pastEvents[0].homeTeam,
+        val gameOne = getString(
+            R.string.game_data_1, pastEvents[0].homeTeam,
             pastEvents[0].homeTeamScore,
-            pastEvents[0].awayTeam, pastEvents[0].awayTeamScore)
+            pastEvents[0].awayTeam, pastEvents[0].awayTeamScore
+        )
         textView1.text = gameOne
 
-        val gameTwo = getString(R.string.game_data_2,pastEvents[1].homeTeam,
+        val gameTwo = getString(
+            R.string.game_data_2, pastEvents[1].homeTeam,
             pastEvents[1].homeTeamScore,
-            pastEvents[1].awayTeam, pastEvents[1].awayTeamScore)
+            pastEvents[1].awayTeam, pastEvents[1].awayTeamScore
+        )
         textView2.text = gameTwo
 
-        val gameThree = getString(R.string.game_data_3,pastEvents[2].homeTeam,
+        val gameThree = getString(
+            R.string.game_data_3, pastEvents[2].homeTeam,
             pastEvents[2].homeTeamScore,
-            pastEvents[2].awayTeam, pastEvents[2].awayTeamScore)
+            pastEvents[2].awayTeam, pastEvents[2].awayTeamScore
+        )
         textView3.text = gameThree
 
-        val gameFour = getString(R.string.game_data_4,pastEvents[3].homeTeam,
+        val gameFour = getString(
+            R.string.game_data_4, pastEvents[3].homeTeam,
             pastEvents[3].homeTeamScore,
-            pastEvents[3].awayTeam, pastEvents[3].awayTeamScore)
+            pastEvents[3].awayTeam, pastEvents[3].awayTeamScore
+        )
         textView4.text = gameFour
 
-        val gameFive = getString(R.string.game_data_5,pastEvents[4].homeTeam,
+        val gameFive = getString(
+            R.string.game_data_5, pastEvents[4].homeTeam,
             pastEvents[4].homeTeamScore,
-            pastEvents[4].awayTeam, pastEvents[4].awayTeamScore)
+            pastEvents[4].awayTeam, pastEvents[4].awayTeamScore
+        )
         textView5.text = gameFive
 
     }

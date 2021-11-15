@@ -28,8 +28,8 @@ class TeamsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamViewHolder {
         context = parent.context
         val view = LayoutInflater
-                .from(parent.context)
-                .inflate(R.layout.item_team, parent, false)
+            .from(parent.context)
+            .inflate(R.layout.item_team, parent, false)
         return TeamViewHolder(view)
     }
 
@@ -54,22 +54,26 @@ class TeamsAdapter(
 
         fun bind(team: TeamModel) {
             Glide.with(itemView)
-                    .load(team.badgeUrl)
-                    .transform(CenterCrop())
-                    .into(badge)
+                .load(team.badgeUrl)
+                .transform(CenterCrop())
+                .into(badge)
 
             name.text = team.teamName
 
-            itemView.setOnClickListener { onTeamClick.invoke(team)}
+            itemView.setOnClickListener { onTeamClick.invoke(team) }
             switch.setOnClickListener {
                 Log.d("Click", "Switch clicked")
-                if(switch.isChecked) {
+                if (switch.isChecked) {
                     Log.d("Click", "Add team to DB/Favorites")
                     if (context is MainActivity) {
                         val activity = context as MainActivity
                         mTeamViewModel = ViewModelProvider(activity).get(TeamViewModel::class.java)
-                        mTeamViewModel.addTeam(TeamEntity(team.teamId.toInt(),
-                            team.teamName, team.badgeUrl))
+                        mTeamViewModel.addTeam(
+                            TeamEntity(
+                                team.teamId.toInt(),
+                                team.teamName, team.badgeUrl
+                            )
+                        )
                     }
                 }
                 switch.setOnCheckedChangeListener { _, isChecked ->

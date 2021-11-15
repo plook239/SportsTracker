@@ -8,7 +8,7 @@ import com.gmail.lookpj2.sportstracker.data.local.dao.TeamDao
 import com.gmail.lookpj2.sportstracker.data.local.entities.TeamEntity
 
 @Database(entities = [TeamEntity::class], version = 1, exportSchema = false)
-abstract class SportsTrackerDb : RoomDatabase(){
+abstract class SportsTrackerDb : RoomDatabase() {
 
     companion object {
         private var db: SportsTrackerDb? = null
@@ -17,10 +17,12 @@ abstract class SportsTrackerDb : RoomDatabase(){
             if (db == null) {
                 synchronized(SportsTrackerDb::class) {
                     if (db == null) {
-                        db = Room.databaseBuilder(context.applicationContext,
-                                SportsTrackerDb::class.java, "sportstracker_db")
-                                .allowMainThreadQueries()
-                                .build()
+                        db = Room.databaseBuilder(
+                            context.applicationContext,
+                            SportsTrackerDb::class.java, "sportstracker_db"
+                        )
+                            .allowMainThreadQueries()
+                            .build()
                     }
                 }
             }

@@ -5,22 +5,19 @@ import android.util.Log
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.lookpj2.sportstracker.R
 import com.gmail.lookpj2.sportstracker.data.Repository
-import com.gmail.lookpj2.sportstracker.data.local.entities.TeamEntity
-import com.gmail.lookpj2.sportstracker.data.remote.model.PastEventModel
 import com.gmail.lookpj2.sportstracker.data.remote.model.TeamModel
 import com.gmail.lookpj2.sportstracker.databinding.ActivityMainBinding
-import com.gmail.lookpj2.sportstracker.logic.TeamViewModel
 import com.gmail.lookpj2.sportstracker.logic.TeamsAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
 
     private lateinit var teamResults: RecyclerView
     private lateinit var teamResultsAdapter: TeamsAdapter
@@ -41,7 +38,7 @@ class MainActivity : AppCompatActivity(){
         teamResults.adapter = teamResultsAdapter
     }
 
-    private fun setupSearch(){
+    private fun setupSearch() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchView.clearFocus()
@@ -60,13 +57,13 @@ class MainActivity : AppCompatActivity(){
         })
     }
 
-    private fun setupButtons(){
-        binding.favoritesFragmentStartButton.setOnClickListener{
+    private fun setupButtons() {
+        binding.favoritesFragmentStartButton.setOnClickListener {
             startFavoritesFragment(FavoritesFragment())
             Log.d("Click", "Favorites Button Clicked")
         }
 
-        binding.endFavoritesFragmentButton.setOnClickListener{
+        binding.endFavoritesFragmentButton.setOnClickListener {
             endFavoritesFragment()
             Log.d("Click", "Close Favorites Button Clicked")
         }
@@ -80,9 +77,12 @@ class MainActivity : AppCompatActivity(){
             false
         )
 
-        val itemDecoration = DividerItemDecoration(this@MainActivity,
-                DividerItemDecoration.VERTICAL)
-        itemDecoration.setDrawable(resources.getDrawable(R.drawable.layer, null))
+        val itemDecoration = DividerItemDecoration(
+            this@MainActivity,
+            DividerItemDecoration.VERTICAL
+        )
+        itemDecoration.setDrawable(ResourcesCompat
+            .getDrawable(resources, R.drawable.layer, null)!!)
         teamResults.addItemDecoration(itemDecoration)
     }
 
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity(){
 
     private fun endFavoritesFragment() {
         val fragment: Fragment? =
-                supportFragmentManager.findFragmentById(R.id.favorites_fragment_container)
+            supportFragmentManager.findFragmentById(R.id.favorites_fragment_container)
         if (fragment != null) supportFragmentManager.beginTransaction().remove(fragment).commit()
     }
 
@@ -112,8 +112,10 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun onTeamsFetchedError() {
-        Toast.makeText(this, getString(R.string.error_fetch_teams),
-                Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this, getString(R.string.error_fetch_teams),
+            Toast.LENGTH_SHORT
+        ).show()
         Log.d("Crashed", "Internet is out or team name is wrong")
     }
 
