@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">SportsTracker</string>
+    <string name="error_fetch_teams">
+        Either you typed the team\'s name wrong, or you have no internet connection!</string>
+    <string name="favorites_button">Favorites</string>
+    <string name="favorites_title">favorite teams</string>
+    <string name="game_data_1">Team %1$s (%2$d) vs. Team %3$s (%4$d)</string>
+    <string name="game_data_2">Team %1$s (%2$d) vs. Team %3$s (%4$d)</string>
+    <string name="game_data_3">Team %1$s (%2$d) vs. Team %3$s (%4$d)</string>
+    <string name="game_data_4">Team %1$s (%2$d) vs. Team %3$s (%4$d)</string>
+    <string name="game_data_5">Team %1$s (%2$d) vs. Team %3$s (%4$d)</string>
+    <string name="event_view_title">%1$s Past Five Home Games</string>
+</resources>
