@@ -1,7 +1,6 @@
 package com.gmail.lookpj2.sportstracker.logic
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +17,10 @@ import com.gmail.lookpj2.sportstracker.ui.EventsFragment
 import com.gmail.lookpj2.sportstracker.ui.MainActivity
 
 class FavoritesAdapter(
-    private var teams: MutableList<TeamEntity>
+    private var teams: List<TeamEntity>
 ) : RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
     private lateinit var context: Context
-    private lateinit var mTeamViewModel: TeamViewModel
+    private lateinit var teamViewModel: TeamViewModel
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
         context = parent.context
         val view = LayoutInflater
@@ -35,6 +34,11 @@ class FavoritesAdapter(
     }
 
     override fun getItemCount(): Int = teams.size
+
+    fun submitList(list: List<TeamEntity>){
+        teams = list
+        notifyDataSetChanged()
+    }
 
     inner class FavoritesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val badge: ImageView = itemView.findViewById(R.id.team_badge)
@@ -59,18 +63,16 @@ class FavoritesAdapter(
                 )
                 fragmentTransaction.commit()
             }
+
             remove.setOnClickListener {
-                Log.d("Click", "Remove team from DB/Favorites")
                 if (context is MainActivity) {
                     val activity = context as MainActivity
-                    mTeamViewModel = ViewModelProvider(activity)
+                    teamViewModel = ViewModelProvider(activity)
                         .get(TeamViewModel::class.java)
-                    mTeamViewModel.deleteTeam(team.teamId)
-                    teams.removeAt(layoutPosition)
+                    teamViewModel.deleteTeam(team.teamId)
                     notifyItemRemoved(layoutPosition)
                     notifyItemRangeChanged(layoutPosition, itemCount)
                 }
-
             }
 
         }

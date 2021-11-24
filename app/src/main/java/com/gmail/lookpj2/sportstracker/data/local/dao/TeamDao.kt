@@ -1,5 +1,6 @@
 package com.gmail.lookpj2.sportstracker.data.local.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
@@ -19,5 +20,5 @@ interface TeamDao {
     fun deleteTeam(id: Int)
 
     @Query("SELECT * FROM team_table ORDER BY teamName ASC")
-    fun getTeams(): List<TeamEntity>
+    fun getTeams(): LiveData<List<TeamEntity>>
 }

@@ -21,8 +21,7 @@ abstract class SportsTrackerDb : RoomDatabase() {
                             context.applicationContext,
                             SportsTrackerDb::class.java, "sportstracker_db"
                         )
-                            .allowMainThreadQueries()
-                            .build()
+                        .build()
                     }
                 }
             }

@@ -1,7 +1,6 @@
 package com.gmail.lookpj2.sportstracker.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,22 +9,20 @@ import androidx.fragment.app.Fragment
 import com.gmail.lookpj2.sportstracker.R
 import com.gmail.lookpj2.sportstracker.data.Repository
 import com.gmail.lookpj2.sportstracker.data.remote.model.PastEventModel
+import com.gmail.lookpj2.sportstracker.databinding.EventsFragmentBinding
 import kotlinx.android.synthetic.main.events_fragment.*
 
 class EventsFragment(id: String) : Fragment() {
-    private lateinit var viewOfLayout: View
     var teamId = id
+    lateinit var binding: EventsFragmentBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewOfLayout =
-            LayoutInflater.from(context).inflate(
-                R.layout.events_fragment, container,
-                false
-            )
-        return viewOfLayout
+        binding = EventsFragmentBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,53 +39,64 @@ class EventsFragment(id: String) : Fragment() {
     }
 
     private fun onEventsError() {
-        Toast.makeText(
-            this@EventsFragment.context, getString(R.string.error_fetch_teams),
-            Toast.LENGTH_SHORT
-        ).show()
-        Log.d("Crashed", "No events were found with that team ID")
+        if (isAdded) {
+            Toast.makeText(
+                this@EventsFragment.context, getString(R.string.error_fetch_teams),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun onEventsFetched(pastEvents: List<PastEventModel>) {
-        Log.d("Events", "Five Previous Home Events: $pastEvents[0]")
-        val viewTitle = getString(R.string.event_view_title, pastEvents[0].homeTeam)
-        event_view_title.text = viewTitle
+        if (isAdded) {
+            binding.eventViewTitle.text =
+                getString(R.string.event_view_title, pastEvents[0].homeTeam)
 
-        val gameOne = getString(
-            R.string.game_data_1, pastEvents[0].homeTeam,
-            pastEvents[0].homeTeamScore,
-            pastEvents[0].awayTeam, pastEvents[0].awayTeamScore
-        )
-        textView1.text = gameOne
-
-        val gameTwo = getString(
-            R.string.game_data_2, pastEvents[1].homeTeam,
-            pastEvents[1].homeTeamScore,
-            pastEvents[1].awayTeam, pastEvents[1].awayTeamScore
-        )
-        textView2.text = gameTwo
-
-        val gameThree = getString(
-            R.string.game_data_3, pastEvents[2].homeTeam,
-            pastEvents[2].homeTeamScore,
-            pastEvents[2].awayTeam, pastEvents[2].awayTeamScore
-        )
-        textView3.text = gameThree
-
-        val gameFour = getString(
-            R.string.game_data_4, pastEvents[3].homeTeam,
-            pastEvents[3].homeTeamScore,
-            pastEvents[3].awayTeam, pastEvents[3].awayTeamScore
-        )
-        textView4.text = gameFour
-
-        val gameFive = getString(
-            R.string.game_data_5, pastEvents[4].homeTeam,
-            pastEvents[4].homeTeamScore,
-            pastEvents[4].awayTeam, pastEvents[4].awayTeamScore
-        )
-        textView5.text = gameFive
-
+            pastEvents.forEachIndexed { i: Int, pastEventModel: PastEventModel ->
+                when (i) {
+                    0 -> {
+                        binding.textView1.text = getString(
+                            R.string.game_data_1, pastEvents[0].homeTeam,
+                            pastEvents[0].homeTeamScore,
+                            pastEvents[0].awayTeam, pastEvents[0].awayTeamScore
+                        )
+                        binding.textView1.visibility = View.VISIBLE
+                    }
+                    1 -> {
+                        binding.textView2.text = getString(
+                            R.string.game_data_2, pastEvents[1].homeTeam,
+                            pastEvents[1].homeTeamScore,
+                            pastEvents[1].awayTeam, pastEvents[1].awayTeamScore
+                        )
+                        binding.textView2.visibility = View.VISIBLE
+                    }
+                    2 -> {
+                        binding.textView3.text = getString(
+                            R.string.game_data_3, pastEvents[2].homeTeam,
+                            pastEvents[2].homeTeamScore,
+                            pastEvents[2].awayTeam, pastEvents[2].awayTeamScore
+                        )
+                        binding.textView3.visibility = View.VISIBLE
+                    }
+                    3 -> {
+                        binding.textView4.text = getString(
+                            R.string.game_data_4, pastEvents[3].homeTeam,
+                            pastEvents[3].homeTeamScore,
+                            pastEvents[3].awayTeam, pastEvents[3].awayTeamScore
+                        )
+                        binding.textView4.visibility = View.VISIBLE
+                    }
+                    4 -> {
+                        binding.textView5.text = getString(
+                            R.string.game_data_5, pastEvents[4].homeTeam,
+                            pastEvents[4].homeTeamScore,
+                            pastEvents[4].awayTeam, pastEvents[4].awayTeamScore
+                        )
+                        binding.textView5.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
     }
 
     private fun endEventsFragment() {

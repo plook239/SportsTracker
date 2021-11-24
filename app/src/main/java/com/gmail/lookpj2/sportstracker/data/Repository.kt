@@ -1,6 +1,5 @@
 package com.gmail.lookpj2.sportstracker.data
 
-import android.util.Log
 import com.gmail.lookpj2.sportstracker.data.remote.api.Api
 import com.gmail.lookpj2.sportstracker.data.remote.model.PastEventModel
 import com.gmail.lookpj2.sportstracker.data.remote.model.TeamModel
@@ -17,7 +16,7 @@ object Repository {
 
     init {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://www.thesportsdb.com/api/v1/json/1/")
+            .baseUrl("https://www.thesportsdb.com/api/v1/json/2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -43,7 +42,6 @@ object Repository {
                                 onSuccess.invoke(responseBody.teams)
                             } catch (e: Exception) {
                                 onError.invoke()
-                                Log.d("Crashed", "The team name is wrong.")
                             }
                         } else {
                             onError.invoke()
@@ -62,7 +60,6 @@ object Repository {
         onSuccess: (pastEvents: List<PastEventModel>) -> Unit,
         onError: () -> Unit
     ) {
-        Log.d("lul", teamId)
         api.getTeamsPastFiveHomeGames(teamId = teamId)
             .enqueue(object : Callback<GetPastEventsResponse> {
                 override fun onResponse(

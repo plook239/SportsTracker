@@ -1,7 +1,6 @@
 package com.gmail.lookpj2.sportstracker.logic
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import com.gmail.lookpj2.sportstracker.R
 import com.gmail.lookpj2.sportstracker.data.local.entities.TeamEntity
 import com.gmail.lookpj2.sportstracker.data.remote.model.TeamModel
 import com.gmail.lookpj2.sportstracker.ui.MainActivity
+import kotlinx.android.synthetic.main.item_team.view.*
 
 
 class TeamsAdapter(
@@ -23,7 +23,7 @@ class TeamsAdapter(
     private val onTeamClick: (team: TeamModel) -> Unit
 ) : RecyclerView.Adapter<TeamsAdapter.TeamViewHolder>() {
     private lateinit var context: Context
-    private lateinit var mTeamViewModel: TeamViewModel
+    private lateinit var teamViewModel: TeamViewModel
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamViewHolder {
         context = parent.context
@@ -53,6 +53,9 @@ class TeamsAdapter(
         private val switch: SwitchCompat = itemView.findViewById(R.id.favorite_selector_switch)
 
         fun bind(team: TeamModel) {
+            itemView.favorite_selector_switch.setOnCheckedChangeListener(null)
+            itemView.favorite_selector_switch.isChecked = team.selectedFavorite
+
             Glide.with(itemView)
                 .load(team.badgeUrl)
                 .transform(CenterCrop())
@@ -61,31 +64,26 @@ class TeamsAdapter(
             name.text = team.teamName
 
             itemView.setOnClickListener { onTeamClick.invoke(team) }
-            switch.setOnClickListener {
-                Log.d("Click", "Switch clicked")
-                if (switch.isChecked) {
-                    Log.d("Click", "Add team to DB/Favorites")
+
+            switch.setOnCheckedChangeListener { _, isChecked ->
+                if (!isChecked) {
                     if (context is MainActivity) {
                         val activity = context as MainActivity
-                        mTeamViewModel = ViewModelProvider(activity).get(TeamViewModel::class.java)
-                        mTeamViewModel.addTeam(
+                        teamViewModel = ViewModelProvider(activity)
+                            .get(TeamViewModel::class.java)
+                        teamViewModel.deleteTeam(team.teamId.toInt())
+                    }
+                }
+                else {
+                    if (context is MainActivity) {
+                        val activity = context as MainActivity
+                        teamViewModel = ViewModelProvider(activity).get(TeamViewModel::class.java)
+                        teamViewModel.addTeam(
                             TeamEntity(
                                 team.teamId.toInt(),
                                 team.teamName, team.badgeUrl
                             )
                         )
-                    }
-                }
-                switch.setOnCheckedChangeListener { _, isChecked ->
-                    Log.d("Click", "Changed switch state")
-                    if (!isChecked) {
-                        Log.d("Click", "Remove team from DB/Favorites")
-                        if (context is MainActivity) {
-                            val activity = context as MainActivity
-                            mTeamViewModel = ViewModelProvider(activity)
-                                .get(TeamViewModel::class.java)
-                            mTeamViewModel.deleteTeam(team.teamId.toInt())
-                        }
                     }
                 }
             }
