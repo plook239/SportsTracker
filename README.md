@@ -9,7 +9,5 @@ Step 4) Click the team card in each list to view the past five home games your t
 Step 5) Click the 'X' next to each team in your favorites list to remove them from the database.  
 Step 6) Click the Back to Search button to return to the search view/list.  
 
-API: https://www.thesportsdb.com/api.php - using Test API Key '1'.  
+API: https://www.thesportsdb.com/api.php - using Test API Key '2'.  
 Past events limited to a teams past five home games for free tier.  
-
-![image](https://user-images.githubusercontent.com/54293097/141724768-eeba78c3-f8ed-4e97-9c5b-3d53cf545ffd.png)
